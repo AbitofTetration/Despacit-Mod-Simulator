@@ -314,6 +314,14 @@ addLayer("m", {
     hotkeys: [
         {key: "m", description: "M: Reset for dilated matter", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
+    gainMult() { // Calculate the multiplier for main currency from bonuses
+        mult = new ExpantaNum(3)
+        return mult
+    },
+    gainExp() { // Calculate the multiplier for main currency from bonuses
+        mult = new ExpantaNum(1)
+        return mult
+    },
     onPrestige() {
       player[this.layer].power = new ExpantaNum(0)
     },
@@ -411,11 +419,11 @@ addLayer("m", {
             },
         },
     getResetGain() {
-		  let gain = ExpantaNum.slog(tmp[layer].baseAmount, 10).sub(2.35)
+		  let gain = ExpantaNum.slog(tmp[layer].baseAmount, 3.15).mul(tmp[layer].gainMult).sub(2.35)
       return gain.floor().max(0)
     },
     getNextAt() {
-		  let gain = ExpantaNum.tetrate(10, tmp[layer].getResetGain.plus(3.35))
+		  let gain = ExpantaNum.tetrate(3.15, tmp[layer].getResetGain.plus(3.35).div(tmp[layer].gainMult))
       return gain
     },
     canReset() {
