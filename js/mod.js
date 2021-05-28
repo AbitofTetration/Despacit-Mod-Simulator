@@ -1,8 +1,8 @@
 let modInfo = {
-	name: "The Modding Tree",
-	id: "mymod",
+	name: "Despacit Mod Simulator",
+	id: "despacits",
 	author: "",
-	pointsName: "points",
+	pointsName: "despacit power",
 	discordName: "",
 	discordLink: "",
 	initialStartPoints: new ExpantaNum (10), // Used for hard resets and new players
@@ -12,14 +12,12 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "",
+	num: "0.1",
+	name: "Modding the World",
 }
 
 let changelog = `<h1>Changelog:</h1><br>
-	<h3>v0.0</h3><br>
-		- Added things.<br>
-		- Added stuff.`
+	I'm never using this lol`
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
 
@@ -33,7 +31,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return true
+	return hasUpgrade("p", 11)
 }
 
 // Calculate points/sec!
@@ -42,6 +40,15 @@ function getPointGen() {
 		return new ExpantaNum(0)
 
 	let gain = new ExpantaNum(1)
+  if (hasUpgrade("p", 12)) gain = gain.mul(upgradeEffect("p", 12))
+  if (hasUpgrade("p", 13)) gain = gain.mul(upgradeEffect("p", 13))
+  if (hasUpgrade("p", 31)) gain = gain.mul(upgradeEffect("p", 31))
+  if (hasUpgrade("p", 14)) gain = gain.pow(1.5)
+  if (hasUpgrade("p", 34)) gain = gain.pow(1.3)
+  if (hasUpgrade("m", 31)) gain = gain.mul(upgradeEffect("m", 31))
+  if (challengeCompletions("d", 12)>=1) gain = gain.pow(challengeEffect("d", 11))
+  if (inChallenge("d", 11)) gain = gain.root(layers.d.challenges[11].nerf())
+  if (inChallenge("d", 12)) gain = gain.root(layers.d.challenges[12].nerf())
 	return gain
 }
 

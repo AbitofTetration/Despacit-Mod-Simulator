@@ -44,8 +44,8 @@ function format(decimal, precision = 2, small=false) {
   else if(decimal.lt(1000)){
     let f=fmt.split(".")
     if(precision==0){
-      if(!f.includes("."))return fmt
-      return fmt[0]}
+      if(!f.includes("."))return f[0]
+      return f[0]}
     if(f.length==1){
       return fmt+".00"
     }
